@@ -1,0 +1,29 @@
+apiVersion: skaffold/v1beta11
+kind: Config
+
+# Dockerイメージのビルドに関する設定
+build:
+  artifacts:
+  # ビルドするイメージ
+  - image: yokoto/skaffold-example-frontend
+    context: php-redis                                            # ソースファイルがあるパスの指定
+  - image: yokoto/skaffold-example-redis-slave
+    context: redis-slave
+  local:                                                          # ローカルでイメージをビルドするときの設定
+    push: false                                                   # ビルドしたイメージをpushするか
+
+# テストの設定
+test:
+  - image: yokoto/skaffold-example-frontend
+    structureTests:
+      - './structure-test/frontend.yaml'
+
+# デプロイに関する設定
+deploy:
+  kubectl:
+    # デプロイ対象のマニフェストファイルの指定
+    manifests:
+    - frontend-*.yaml
+    - redis-master-*.yaml
+    - redis-replica-*.yaml
+    - guestbook-ingress.yaml

@@ -1,0 +1,13 @@
+schemaVersion: 2.0.0
+
+# 各種ファイルの存在確認
+fileExistenceTests:
+  - name: 'php file'
+    path: '/var/www/html/guestbook.php'
+    shouldExist: true
+  - name: 'js file'
+    path: '/var/www/html/controllers.js'
+    shouldExist: true
+  - name: 'html file'
+    path: '/var/www/html/index.html'
+    shouldExist: true
